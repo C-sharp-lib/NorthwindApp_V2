@@ -14,10 +14,6 @@ namespace NorthwindApplication.Models
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=True;");
-        }
 
         public DbSet<Employees> Employees { get; set; }
         public DbSet<Customers> Customers { get; set; }

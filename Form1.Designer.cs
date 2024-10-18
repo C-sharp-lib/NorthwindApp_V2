@@ -31,7 +31,6 @@
             dataGridViewTable = new DataGridView();
             comboBoxTable = new ComboBox();
             comboBoxColumn = new ComboBox();
-            comboBoxValue = new ComboBox();
             btnLoadData = new Button();
             btnExit = new Button();
             btnDeleteRecord = new Button();
@@ -64,14 +63,7 @@
             comboBoxColumn.Name = "comboBoxColumn";
             comboBoxColumn.Size = new Size(164, 23);
             comboBoxColumn.TabIndex = 2;
-            // 
-            // comboBoxValue
-            // 
-            comboBoxValue.FormattingEnabled = true;
-            comboBoxValue.Location = new Point(624, 98);
-            comboBoxValue.Name = "comboBoxValue";
-            comboBoxValue.Size = new Size(164, 23);
-            comboBoxValue.TabIndex = 3;
+            comboBoxColumn.SelectedIndexChanged += comboBoxColumn_SelectedIndexChanged;
             // 
             // btnLoadData
             // 
@@ -153,7 +145,6 @@
             Controls.Add(btnDeleteRecord);
             Controls.Add(btnExit);
             Controls.Add(btnLoadData);
-            Controls.Add(comboBoxValue);
             Controls.Add(comboBoxColumn);
             Controls.Add(comboBoxTable);
             Controls.Add(dataGridViewTable);
@@ -168,7 +159,6 @@
         private DataGridView dataGridViewTable;
         private ComboBox comboBoxTable;
         private ComboBox comboBoxColumn;
-        private ComboBox comboBoxValue;
         private Button btnLoadData;
         private Button btnExit;
         private Button btnDeleteRecord;
