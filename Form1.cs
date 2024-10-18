@@ -8,6 +8,18 @@ namespace NorthwindApplication
     public partial class Form1 : Form
     {
         private ApplicationDbContext _context;
+        private readonly Dictionary<string, (Type EntityType, string PrimaryKeyPropName)> _tableMappings = new Dictionary<string, (Type, string)>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Employees", (typeof(Employees), "EmployeeID") },
+            { "Customers", (typeof(Customers), "CustomerID") },
+            { "Products", (typeof(Products), "ProductID") },
+            { "Orders", (typeof(Orders), "OrderID") },
+            { "Region", (typeof(Models.Region), "RegionID") },
+            { "Shippers", (typeof(Shippers), "ShipperID") },
+            { "Suppliers", (typeof(Suppliers), "SupplierID") },
+            { "Territories", (typeof(Territories), "TerritoryID") },
+            // Add more mappings for other tables...
+        };
         public Form1(ApplicationDbContext context)
         {
             InitializeComponent();
@@ -42,10 +54,81 @@ namespace NorthwindApplication
 
         private void btnDeleteRecord_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string selectedTable = comboBoxTable.SelectedItem.ToString();
+                if (comboBoxColumn.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a Record ID to delete.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
+                // Confirm deletion with the user
+                DialogResult dialogResult = MessageBox.Show($"Are you sure you want to delete the selected record from {selectedTable}?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult != DialogResult.Yes)
+                {
+                    return; // User canceled the deletion
+                }
+
+                // Get the primary key value
+                object primaryKeyValue = comboBoxColumn.SelectedItem;
+
+                // Perform deletion dynamically
+                DeleteEntityDynamically(selectedTable, primaryKeyValue);
+
+                // Refresh the Record ID ComboBox after deletion
+                LoadPrimaryKeys(selectedTable);
+                LoadSelectedTableData(selectedTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        public void DeleteEntityDynamically(string tableName, object primaryKeyValue)
+        {
+            if (!_tableMappings.TryGetValue(tableName, out var mapping))
+            {
+                MessageBox.Show("Unsupported table selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Type entityType = mapping.EntityType;
+            string primaryKeyPropName = mapping.PrimaryKeyPropName;
+
+            // Get the generic Set<T>() method
+            MethodInfo setMethod = typeof(DbContext).GetMethod("Set", Type.EmptyTypes);
+            MethodInfo genericSetMethod = setMethod.MakeGenericMethod(entityType);
+            var dbSet = genericSetMethod.Invoke(_context, null);
+
+            // Get the entity to delete
+            MethodInfo findMethod = typeof(DbSet<>)
+                                    .MakeGenericType(entityType)
+                                    .GetMethod("Find", new Type[] { typeof(object[]) });
+
+            var entity = findMethod.Invoke(dbSet, new object[] { new object[] { primaryKeyValue } });
+
+            if (entity == null)
+            {
+                MessageBox.Show("Record not found.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Remove the entity
+            MethodInfo removeMethod = typeof(DbSet<>)
+                                       .MakeGenericType(entityType)
+                                       .GetMethod("Remove", new Type[] { entityType });
+            removeMethod.Invoke(dbSet, new object[] { entity });
+
+            // Save changes
+            _context.SaveChanges();
+
+            MessageBox.Show($"{entityType.Name} record deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+    // Helper method to get primary key property name based on table name
+    private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
