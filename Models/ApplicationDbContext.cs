@@ -47,5 +47,10 @@ namespace NorthwindApplication.Models
             modelBuilder.Entity<Territories>()
                 .HasKey(bi => new { bi.TerritoryID });
         }
+
+        internal object Set(ApplicationDbContext context, string tableName, Type entityType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

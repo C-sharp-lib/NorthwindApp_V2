@@ -27,6 +27,8 @@ namespace NorthwindApplication
             PopulateComboTables();
             comboBoxTable.SelectedIndexChanged += comboBoxTable_SelectedIndexChanged;
             btnUpdateRecord.Click += btnUpdateRecord_Click;
+            this.Bounds = Screen.FromControl(this).Bounds;
+            this.Refresh();
         }
 
         private void btnLoadData_Click(object sender, EventArgs e)
@@ -36,14 +38,21 @@ namespace NorthwindApplication
 
         private void btnAddForm_Click(object sender, EventArgs e)
         {
-
+            string selectedTable = comboBoxTable.SelectedItem.ToString();
+            if (string.IsNullOrEmpty(selectedTable))
+            {
+                MessageBox.Show("Please select a table and a primary key value.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            AddForm addForm = new AddForm(_context, selectedTable);
+            addForm.Show();
         }
 
         private void btnUpdateRecord_Click(object sender, EventArgs e)
         {
             string selectedTable = comboBoxTable.SelectedItem.ToString();
             object selectedKey = comboBoxColumn.SelectedItem;
-            if (string.IsNullOrEmpty(selectedTable) || selectedKey == null) 
+            if (string.IsNullOrEmpty(selectedTable) || selectedKey == null)
             {
                 MessageBox.Show("Please select a table and a primary key value.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -127,8 +136,8 @@ namespace NorthwindApplication
             MessageBox.Show($"{entityType.Name} record deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-    // Helper method to get primary key property name based on table name
-    private void btnExit_Click(object sender, EventArgs e)
+        // Helper method to get primary key property name based on table name
+        private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -143,7 +152,7 @@ namespace NorthwindApplication
         private void LoadSelectedTableData(string selectedTable)
         {
             selectedTable = comboBoxTable.SelectedItem.ToString();
-
+            
             // Get the DbSet property corresponding to the selected table
             var dbSetProperty = _context.GetType().GetProperty(selectedTable);
 
@@ -156,9 +165,18 @@ namespace NorthwindApplication
                 {
                     // Retrieve data asynchronously to avoid blocking the UI
                     var data = dbSet.Cast<object>().ToList();
+                    DataGridViewImageColumn imageColumn = dataGridViewTable.Columns["Image"] as DataGridViewImageColumn;
+                    if (imageColumn != null)
+                    {
+                        imageColumn.ImageLayout = DataGridViewImageCellLayout.Normal;
+                    }
+                    dataGridViewTable.RowTemplate.Height = 100;
+                    dataGridViewTable.RowTemplate.Resizable = DataGridViewTriState.True;
 
                     // Bind data to the DataGridView
                     dataGridViewTable.DataSource = data;
+
+
                 }
             }
         }
@@ -226,7 +244,7 @@ namespace NorthwindApplication
         }
         private void comboBoxColumn_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
         }
     }
 }

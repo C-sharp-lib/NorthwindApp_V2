@@ -11,6 +11,7 @@ namespace NorthwindApplication.Models
     public class Customers
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CustomerID { get; set; }
         public string CompanyName{ get; set; }
         public string? ContactName { get; set; }

@@ -31,7 +31,6 @@
             dataGridViewTable = new DataGridView();
             comboBoxTable = new ComboBox();
             comboBoxColumn = new ComboBox();
-            btnLoadData = new Button();
             btnExit = new Button();
             btnDeleteRecord = new Button();
             btnUpdateRecord = new Button();
@@ -44,13 +43,13 @@
             dataGridViewTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewTable.Location = new Point(12, 12);
             dataGridViewTable.Name = "dataGridViewTable";
-            dataGridViewTable.Size = new Size(606, 580);
+            dataGridViewTable.Size = new Size(1476, 700);
             dataGridViewTable.TabIndex = 0;
             // 
             // comboBoxTable
             // 
             comboBoxTable.FormattingEnabled = true;
-            comboBoxTable.Location = new Point(624, 29);
+            comboBoxTable.Location = new Point(1528, 55);
             comboBoxTable.Name = "comboBoxTable";
             comboBoxTable.Size = new Size(164, 23);
             comboBoxTable.TabIndex = 1;
@@ -59,25 +58,11 @@
             // comboBoxColumn
             // 
             comboBoxColumn.FormattingEnabled = true;
-            comboBoxColumn.Location = new Point(624, 60);
+            comboBoxColumn.Location = new Point(1528, 84);
             comboBoxColumn.Name = "comboBoxColumn";
             comboBoxColumn.Size = new Size(164, 23);
             comboBoxColumn.TabIndex = 2;
             comboBoxColumn.SelectedIndexChanged += comboBoxColumn_SelectedIndexChanged;
-            // 
-            // btnLoadData
-            // 
-            btnLoadData.BackColor = Color.DodgerBlue;
-            btnLoadData.FlatStyle = FlatStyle.Popup;
-            btnLoadData.Font = new Font("Verdana", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLoadData.ForeColor = Color.White;
-            btnLoadData.Location = new Point(634, 206);
-            btnLoadData.Name = "btnLoadData";
-            btnLoadData.Size = new Size(154, 53);
-            btnLoadData.TabIndex = 4;
-            btnLoadData.Text = "Load Data";
-            btnLoadData.UseVisualStyleBackColor = false;
-            btnLoadData.Click += btnLoadData_Click;
             // 
             // btnExit
             // 
@@ -85,7 +70,7 @@
             btnExit.FlatStyle = FlatStyle.Popup;
             btnExit.Font = new Font("Verdana", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnExit.ForeColor = Color.White;
-            btnExit.Location = new Point(634, 442);
+            btnExit.Location = new Point(1538, 441);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(154, 53);
             btnExit.TabIndex = 5;
@@ -99,7 +84,7 @@
             btnDeleteRecord.FlatStyle = FlatStyle.Popup;
             btnDeleteRecord.Font = new Font("Verdana", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDeleteRecord.ForeColor = Color.White;
-            btnDeleteRecord.Location = new Point(634, 383);
+            btnDeleteRecord.Location = new Point(1538, 382);
             btnDeleteRecord.Name = "btnDeleteRecord";
             btnDeleteRecord.Size = new Size(154, 53);
             btnDeleteRecord.TabIndex = 6;
@@ -113,7 +98,7 @@
             btnUpdateRecord.FlatStyle = FlatStyle.Popup;
             btnUpdateRecord.Font = new Font("Verdana", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnUpdateRecord.ForeColor = Color.White;
-            btnUpdateRecord.Location = new Point(634, 324);
+            btnUpdateRecord.Location = new Point(1538, 323);
             btnUpdateRecord.Name = "btnUpdateRecord";
             btnUpdateRecord.Size = new Size(154, 53);
             btnUpdateRecord.TabIndex = 7;
@@ -127,7 +112,7 @@
             btnAddForm.FlatStyle = FlatStyle.Popup;
             btnAddForm.Font = new Font("Verdana", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAddForm.ForeColor = Color.White;
-            btnAddForm.Location = new Point(634, 265);
+            btnAddForm.Location = new Point(1538, 264);
             btnAddForm.Name = "btnAddForm";
             btnAddForm.Size = new Size(154, 53);
             btnAddForm.TabIndex = 8;
@@ -139,17 +124,18 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 604);
+            ClientSize = new Size(1704, 763);
             Controls.Add(btnAddForm);
             Controls.Add(btnUpdateRecord);
             Controls.Add(btnDeleteRecord);
             Controls.Add(btnExit);
-            Controls.Add(btnLoadData);
             Controls.Add(comboBoxColumn);
             Controls.Add(comboBoxTable);
             Controls.Add(dataGridViewTable);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dataGridViewTable).EndInit();
             ResumeLayout(false);
         }
@@ -159,7 +145,6 @@
         private DataGridView dataGridViewTable;
         private ComboBox comboBoxTable;
         private ComboBox comboBoxColumn;
-        private Button btnLoadData;
         private Button btnExit;
         private Button btnDeleteRecord;
         private Button btnUpdateRecord;

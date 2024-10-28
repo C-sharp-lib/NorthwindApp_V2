@@ -140,3 +140,4 @@ C:\Users\strad\source\repos\NorthwindApplication\NorthwindApplication\bin\Debug\
 C:\Users\strad\source\repos\NorthwindApplication\NorthwindApplication\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\strad\source\repos\NorthwindApplication\NorthwindApplication\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\strad\source\repos\NorthwindApplication\NorthwindApplication\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\strad\source\repos\NorthwindApplication\NorthwindApplication\obj\Debug\net8.0-windows\NorthwindApplication.AddForm.resources

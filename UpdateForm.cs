@@ -43,7 +43,7 @@ namespace NorthwindApplication
                 this.Close();
                 return;
             }
-           
+
             LoadEntityData();
         }
         private Type GetEntityType(string tableName)
@@ -251,32 +251,32 @@ namespace NorthwindApplication
             }
         }
 
-        private void SaveChanges() 
+        private void SaveChanges()
         {
-            
+
         }
-            private void UpdateEntity<T>(object primaryKey, Action<T> updateAction) where T : class
+        private void UpdateEntity<T>(object primaryKey, Action<T> updateAction) where T : class
+        {
+            var entity = _context.Set<T>().Find(primaryKey);
+            if (entity == null)
             {
-                var entity = _context.Set<T>().Find(primaryKey);
-                if (entity == null)
-                {
-                    MessageBox.Show($"{typeof(T).Name} not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                updateAction(entity);
-
-                try
-                {
-                    _context.SaveChanges();
-                    MessageBox.Show($"{typeof(T).Name} updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred while updating the record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show($"{typeof(T).Name} not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            private bool ValidateInputs()
+
+            updateAction(entity);
+
+            try
+            {
+                _context.SaveChanges();
+                MessageBox.Show($"{typeof(T).Name} updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while updating the record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private bool ValidateInputs()
         {
             foreach (Control control in this.Controls)
             {
@@ -538,10 +538,10 @@ namespace NorthwindApplication
                                     prop.SetValue(orders, dtPicker.Value);
                                 }
                             }
-                    }
-                    _context.Orders.Update(orders);
-                    _context.SaveChanges();
-                });
+                        }
+                        _context.Orders.Update(orders);
+                        _context.SaveChanges();
+                    });
                 }
                 else if (_tableName.Equals("Products", StringComparison.OrdinalIgnoreCase))
                 {
@@ -728,7 +728,7 @@ namespace NorthwindApplication
                             if (panel != null)
                             {
                                 TextBox txtBox = panel.Controls.OfType<TextBox>().FirstOrDefault();
-                               
+
                                 if (txtBox != null && !string.IsNullOrEmpty(txtBox.Text))
                                 {
                                     shippers.CompanyName = txtBox.Text;
@@ -766,7 +766,7 @@ namespace NorthwindApplication
                             if (panel != null)
                             {
                                 TextBox txtBox = panel.Controls.OfType<TextBox>().FirstOrDefault();
-                                
+
                                 if (txtBox != null && !string.IsNullOrEmpty(txtBox.Text))
                                 {
                                     supplier.CompanyName = txtBox.Text;
