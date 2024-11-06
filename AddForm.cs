@@ -244,7 +244,6 @@ namespace NorthwindApplication
                 _context.Add(entity);
                 _context.SaveChanges();
                 MessageBox.Show("Record added successfully!");
-                this.Refresh();
                 this.Close();
             }
             catch (Exception ex) 

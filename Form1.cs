@@ -18,17 +18,18 @@ namespace NorthwindApplication
             { "Shippers", (typeof(Shippers), "ShipperID") },
             { "Suppliers", (typeof(Suppliers), "SupplierID") },
             { "Territories", (typeof(Territories), "TerritoryID") },
-            // Add more mappings for other tables...
         };
         public Form1(ApplicationDbContext context)
         {
             InitializeComponent();
             _context = context;
             PopulateComboTables();
+            GetTableRowCount();
             comboBoxTable.SelectedIndexChanged += comboBoxTable_SelectedIndexChanged;
             btnUpdateRecord.Click += btnUpdateRecord_Click;
+            button1.Click += button1_Click;
             this.Bounds = Screen.FromControl(this).Bounds;
-            this.Refresh();
+
         }
 
         private void btnLoadData_Click(object sender, EventArgs e)
@@ -152,7 +153,7 @@ namespace NorthwindApplication
         private void LoadSelectedTableData(string selectedTable)
         {
             selectedTable = comboBoxTable.SelectedItem.ToString();
-            
+
             // Get the DbSet property corresponding to the selected table
             var dbSetProperty = _context.GetType().GetProperty(selectedTable);
 
@@ -185,6 +186,7 @@ namespace NorthwindApplication
             string selectedTable = comboBoxTable.SelectedItem.ToString();
             LoadPrimaryKeys(selectedTable);
             LoadSelectedTableData(selectedTable);
+            GetTableRowCount();
         }
         private void LoadPrimaryKeys(string tableName)
         {
@@ -245,6 +247,58 @@ namespace NorthwindApplication
         private void comboBoxColumn_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Refresh();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void GetTableRowCount() 
+        {
+            string selectedTable = comboBoxTable.Text;
+            labelTableName.Text = selectedTable;
+            if (selectedTable.Equals("Employees"))
+            {
+                labelTableNameRowCount.Text = _context.Employees.Count().ToString();
+            }
+            if (selectedTable.Equals("Products")) 
+            {
+                labelTableNameRowCount.Text = _context.Products.Count().ToString();
+            }
+            if (selectedTable.Equals("Customers"))
+            {
+                labelTableNameRowCount.Text = _context.Customers.Count().ToString();
+            }
+            if (selectedTable.Equals("Orders"))
+            {
+                labelTableNameRowCount.Text = _context.Orders.Count().ToString();
+            }
+            if (selectedTable.Equals("Region"))
+            {
+                labelTableNameRowCount.Text = _context.Region.Count().ToString();
+            }
+            if (selectedTable.Equals("Shippers"))
+            {
+                labelTableNameRowCount.Text = _context.Shippers.Count().ToString();
+            }
+            if (selectedTable.Equals("Territories"))
+            {
+                labelTableNameRowCount.Text = _context.Territories.Count().ToString();
+            }
+            if (selectedTable.Equals("Suppliers"))
+            {
+                labelTableNameRowCount.Text = _context.Suppliers.Count().ToString();
+            }
+            if (selectedTable.Equals("Categories"))
+            {
+                labelTableNameRowCount.Text = _context.Categories.Count().ToString();
+            }
         }
     }
 }
